@@ -1,9 +1,6 @@
-import 'react-native-gesture-handler';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Alert, FlatList, Modal, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as Print from 'expo-print';
-import * as Sharing from 'expo-sharing';
 import { StatusBar } from 'expo-status-bar';
 import { calculateBtu, money, quoteTotals, statusLabel } from './src/domain';
 
@@ -51,6 +48,8 @@ function Quotes({ data, update, prefBtu }: any) {
     if (!client.trim()) return Alert.alert('Client requis', 'Indiquez le nom du client.');
     const number = `DEV-${new Date().getFullYear()}-${String(data.quotes.length + 1).padStart(3, '0')}`;
     const html = `<html><head><meta charset="utf-8"><style>body{font-family:Arial;color:#123B59;padding:35px}h1{color:#0877C9}.top{display:flex;justify-content:space-between}.box{background:#eaf5fc;padding:18px;border-radius:10px}table{width:100%;border-collapse:collapse;margin-top:30px}th{background:#0877C9;color:white}td,th{padding:12px;border:1px solid #dde8ef}.total{text-align:right;font-size:18px}.foot{margin-top:60px;color:#688093}</style></head><body><div class="top"><div><h1>AEROVENTIS</h1><p>Climatisation · Ventilation · Maintenance<br>Casablanca, Maroc · 06 60 98 96 98</p></div><div><b>DEVIS ${number}</b><br>${new Date().toLocaleDateString('fr-FR')}</div></div><div class="box"><b>Client :</b> ${client}</div><table><tr><th>Désignation</th><th>Qté</th><th>Prix HT</th><th>Total HT</th></tr><tr><td>${desc}</td><td>${qty}</td><td>${money(Number(price))}</td><td>${money(totals.subtotal)}</td></tr></table><p class="total">Total HT : ${money(totals.subtotal)}<br>TVA ${tax}% : ${money(totals.tax)}<br><b>Total TTC : ${money(totals.total)}</b></p><p>Conditions : 70% à la commande, 30% à la mise en service.<br>Validité de l'offre : 15 jours.</p><p class="foot">Aeroventis vous remercie pour votre confiance.</p></body></html>`;
+    const Print = await import('expo-print');
+    const Sharing = await import('expo-sharing');
     const file = await Print.printToFileAsync({ html }); if (await Sharing.isAvailableAsync()) await Sharing.shareAsync(file.uri, { mimeType: 'application/pdf', dialogTitle: `Partager ${number}` });
     update({ ...data, quotes: [{ id: number, client, total: totals.total, date: new Date().toLocaleDateString('fr-FR') }, ...data.quotes] });
   };
