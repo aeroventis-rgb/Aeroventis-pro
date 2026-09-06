@@ -32,11 +32,11 @@ jobs:
         run: npx expo prebuild --platform android
 
       - name: Compiler l’APK installable
-        run: cd android && ./gradlew assembleDebug
+        run: cd android && ./gradlew assembleRelease
 
       - name: Publier l’APK
         uses: actions/upload-artifact@v4
         with:
           name: Aeroventis-Pro-Android
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+          path: android/app/build/outputs/apk/release/app-release.apk
           if-no-files-found: error
