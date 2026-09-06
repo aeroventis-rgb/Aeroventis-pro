@@ -9,7 +9,6 @@
       "package": "ma.aeroventis.pro",
       "versionCode": 1,
       "adaptiveIcon": { "backgroundColor": "#F3F8FC" }
-    },
-    "plugins": ["expo-print", "expo-sharing"]
+    }
   }
 }
