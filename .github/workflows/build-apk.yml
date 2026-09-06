@@ -27,7 +27,9 @@ jobs:
         run: npm install
 
       - name: Générer le projet Android natif
-        run: npx expo prebuild --platform android --non-interactive
+        env:
+          CI: "1"
+        run: npx expo prebuild --platform android
 
       - name: Compiler l’APK installable
         run: cd android && ./gradlew assembleDebug
