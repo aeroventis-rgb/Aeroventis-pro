@@ -1,0 +1,15 @@
+{
+  "expo": {
+    "name": "Aeroventis Pro",
+    "slug": "aeroventis-pro",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "android": {
+      "package": "ma.aeroventis.pro",
+      "versionCode": 1,
+      "adaptiveIcon": { "backgroundColor": "#F3F8FC" }
+    },
+    "plugins": ["expo-print", "expo-sharing"]
+  }
+}
